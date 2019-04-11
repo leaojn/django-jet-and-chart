@@ -1,9 +1,8 @@
 {% load humanize %}
+{% load staticfiles %}
 
+<link rel="stylesheet" href="{% static 'styles/chart.css' %}">
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript">
-
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript" charset="UTF-8">
 
 
@@ -45,4 +44,4 @@ var chart = new google.charts.Bar(document.getElementById('columnchart_material'
 chart.draw(data, google.charts.Bar.convertOptions(options));
 }
 </script>
-<div id="columnchart_material" style="width: 600px; height: 250px; padding: 20px; "></div>
+<div id="columnchart_material" class="mchart"></div>
