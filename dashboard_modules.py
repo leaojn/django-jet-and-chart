@@ -1,17 +1,44 @@
 from jet.dashboard.modules import DashboardModule, LinkListSettingsForm, LinkListItemForm
 from core.models import Provider
 from django import forms
+from django.template.loader import render_to_string
 
 
 class ProviderRecent(DashboardModule):
     title = 'Quantidade de coxinhas'
     template = 'dashboard_modules/provider.html'
-    limit = 20
+    limit = 2
     column = 0
+    ajax_load = False
+    detelable = False
+    draggable = False
 
     def init_with_context(self, context):
         self.children = Provider.objects.all()
 
+
+class CardsModule(DashboardModule):
+    # title = 'Quantidade de coxinhas'
+    template = 'dashboard_modules/cards.html'
+    limit = 20
+    ajax_load = True
+    column = 0
+
+    detelable = False
+    draggable = False
+    style = "background-color: #ecf2f6; box-shadow:none;padding: 0px!important;margin: 0px!important;"
+
+    class Media:
+        css = ()
+        js = ()
+
+    def init_with_context(self, context):
+        self.children = Provider.objects.all()
+
+    def render(self):
+        self.init_with_context(self.context)
+        print(self.get_context_data())
+        return render_to_string(self.template, self.get_context_data())
 
 # class LinkList(DashboardModule):
 #     title = 'Links'

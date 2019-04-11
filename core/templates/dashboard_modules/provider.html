@@ -1,55 +1,63 @@
 {% load humanize %}
 {% load staticfiles %}
 
-<link rel="stylesheet" href="{% static 'styles/chart.css' %}">
-<script type="text/javascript" src="{% static 'scripts/jquery/jquery.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'scripts/jquery/jquery.throttledresize.js' %}"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript" charset="UTF-8">
 
 
-        var providers = ['Dias da semana']
-        {% for provider in module.children %}
-        providers.push("{{ provider.name }}");
+    var providers = ['Dias da semana']
+    {% for provider in module.children %}
+    providers.push("{{ provider.name }}");
 
-        {% endfor %}
-        console.log(providers);
+    {% endfor %}
+    console.log(providers);
 
-        // Load the Visualization API and the corechart package.
-        google.charts.load('current', {'packages': ['bar']});
+    // Load the Visualization API and the corechart package.
+    google.charts.load('current', { 'packages': ['bar'] });
 
-        google.charts.setOnLoadCallback(drawChart);
-
-        $(window).on("throttledresize", function (event) {
-            drawChart();
-        });
-
-        function drawChart() {
-            var data = google.visualization.arrayToDataTable([
-
-              providers,
-              ['Segunda', 1000, 400, 200],
-              ['Terça', 1170, 460, 300 ],
-              ['Quarta', 660, 1120,400],
-              ['Quinta', 1030, 540, 450],
-              ['Sexta', 1030, 540, 123],
-              ['Sabado', 1030, 540, 123],
-              ['Domingo', 1030, 540,123],
-            ]);
+    google.charts.setOnLoadCallback(drawChart);
 
 
-            var options = {
-                chart: {
+
+    // if ($("body").attr("class") == "menu-pinned  dashboard jet") {
+    //     $(window).on("throttledresize", function (event) {
+    //         drawChart();
+    //     });
+    // }
+    // else {
+    //     $(window).on("throttledresize", function (event) {
+    //         drawChart();
+    //     });
+    // }
+
+
+
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+
+            providers,
+            ['Segunda', 1000, 400, 200],
+            ['Terça', 1170, 460, 300],
+            ['Quarta', 660, 1120, 400],
+            ['Quinta', 1030, 540, 450],
+            ['Sexta', 1030, 540, 123],
+            ['Sabado', 1030, 540, 123],
+            ['Domingo', 1030, 540, 123],
+        ]);
+
+
+        var options = {
+            chart: {
                 title: 'Produção de coxinhas',
                 subtitle: 'Data: 01-04-2019 | 05-04-2019',
-                width: '100%',
-                height: '100%',
-        }
-    };
+                width: 700,
+                height: 300,
+            }
+        };
 
-            var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+        var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
 
-            chart.draw(data, google.charts.Bar.convertOptions(options));
-        }
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+    }
 </script>
 <div id="columnchart_material" class="mchart"></div>

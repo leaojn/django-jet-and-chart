@@ -9,9 +9,10 @@ https://docs.djangoproject.com/en/2.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
+from django.utils.translation import ugettext_lazy as _
 
 import os
-
+from unipath import Path
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -59,11 +60,17 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'coxinha.urls'
-
+PROJECT_DIR = Path(__file__).parent
+USE_I18N = True
+LANGUAGES = (
+    ('en', u'English'),
+    ('pt-br', u'Português'),
+)
+LOCALE_PATHS = (PROJECT_DIR.child('locale'),)
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],  # <- add this line
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -115,8 +122,6 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
-
-USE_I18N = True
 
 USE_L10N = True
 
